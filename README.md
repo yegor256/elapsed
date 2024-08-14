@@ -20,6 +20,34 @@ elapsed do
 end
 ```
 
+You can also send the log message to a log, for example to the
+[Loog](https://github.com/yegor256/loog):
+
+```ruby
+require 'elapsed'
+require 'loog'
+elapsed(Loog::VERBOSE) do
+  # any code
+end
+```
+
+You can also make the message custom:
+
+```ruby
+elapsed(intro: 'File saved') do
+  File.save(f, 'Hello, world!')
+end
+```
+
+Or, you can make the message even more custom:
+
+```ruby
+elapsed do
+  File.save(f, 'Hello, world!')
+  throw :"Successfully saved #{File.size(f)} bytes"
+end
+```
+
 That's it.
 
 ## How to contribute
