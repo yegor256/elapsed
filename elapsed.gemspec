@@ -39,7 +39,7 @@ Gem::Specification.new do |s|
   s.executables = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
   s.rdoc_options = ['--charset=UTF-8']
   s.extra_rdoc_files = ['README.md', 'LICENSE.txt']
-  s.add_runtime_dependency 'loog', '>0'
-  s.add_runtime_dependency 'tago', '>0'
+  s.add_dependency 'loog', '>0'
+  s.add_dependency 'tago', '>0'
   s.metadata['rubygems_mfa_required'] = 'true'
 end
