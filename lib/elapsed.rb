@@ -37,6 +37,8 @@ require 'tago'
 # License:: MIT
 #
 # @param [Object] log The log to send .debug() to
+# @param [String] intro The message to start with
+# @param [Integer] level The level of logging to use
 def elapsed(log = nil, intro: 'Finished', level: Logger::DEBUG)
   start = Time.now
   begin
