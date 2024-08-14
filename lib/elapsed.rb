@@ -37,14 +37,15 @@ require 'tago'
 # License:: MIT
 #
 # @param [Object] log The log to send .debug() to
-def elapsed(log, intro: nil, level: Logger::DEBUG)
+def elapsed(log = nil, intro: 'Finished', level: Logger::DEBUG)
   start = Time.now
   begin
     ret = yield
     msg = intro.to_s
-    msg += ' ' unless msg.empty?
-    msg += "in #{start.ago}"
-    if level == Logger::DEBUG
+    msg += " in #{start.ago}"
+    if log.nil?
+      puts msg
+    elsif level == Logger::DEBUG
       log.debug(msg)
     elsif level == Logger::INFO
       log.info(msg)
@@ -56,7 +57,9 @@ def elapsed(log, intro: nil, level: Logger::DEBUG)
     tag = e.tag
     throw e unless tag.is_a?(Symbol)
     msg = "#{tag} in #{start.ago}"
-    if level == Logger::DEBUG
+    if log.nil?
+      puts msg
+    elsif level == Logger::DEBUG
       log.debug(msg)
     elsif level == Logger::INFO
       log.info(msg)

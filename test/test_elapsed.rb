@@ -46,4 +46,10 @@ class TestElapsed < Minitest::Test
     end
     assert(loog.to_s.include?('works'))
   end
+
+  def test_to_stdout
+    elapsed do
+      4 + 5
+    end
+  end
 end

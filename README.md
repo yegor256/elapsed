@@ -1,4 +1,4 @@
-# Runs a Background Loop Forever
+# Measures the Time Elapsed by a Block
 
 [![DevOps By Rultor.com](http://www.rultor.com/b/yegor256/elapsed)](http://www.rultor.com/p/yegor256/elapsed)
 [![We recommend RubyMine](https://www.elegantobjects.org/rubymine.svg)](https://www.jetbrains.com/ruby/)
@@ -11,28 +11,13 @@
 [![Hits-of-Code](https://hitsofcode.com/github/yegor256/elapsed)](https://hitsofcode.com/view/github/yegor256/elapsed)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/yegor256/elapsed/blob/master/LICENSE.txt)
 
-This simple Ruby gem helps you run a loop forever, in a background thread.
+Here is how you can measure and log the time of a block:
 
 ```ruby
 require 'elapsed'
-# Prepare, with five threads:
-a = elapsed.new(5)
-# Start them all together spinning forever with 30-seconds delay between cycles:
-a.start do
-  puts "I'm alive"
+elapsed do
+  run_something_slow
 end
-# Stop them all together:
-a.stop
-```
-
-You may be interested to get the backtraces of the exceptions that
-happened most recently:
-
-```ruby
-# Keep the last 10 error backtraces in memory:
-a = elapsed.new(5, max_backtraces: 10)
-# Retrieve them:
-p a.backtraces
 ```
 
 That's it.
