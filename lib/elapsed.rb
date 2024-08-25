@@ -23,7 +23,7 @@
 require 'logger'
 require 'tago'
 
-# The function measures the time taked by a block to execute and then prints
+# The function measures the time taken by a block to execute and then prints
 # it to the log.
 #
 #  require 'elapsed'
