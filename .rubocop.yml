@@ -27,7 +27,6 @@ AllCops:
   TargetRubyVersion: 3.2
   SuggestExtensions: false
   NewCops: enable
-
 Layout/EndOfLine:
   EnforcedStyle: lf
 Style/EvalWithLocation:
@@ -40,3 +39,7 @@ Metrics/CyclomaticComplexity:
   Enabled: false
 Metrics/PerceivedComplexity:
   Enabled: false
+required:
+  - rubocop-rake
+  - rubocop-minitest
+  - rubocop-performance
