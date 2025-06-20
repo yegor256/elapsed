@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
     'print the summary of execution to the log with the time it took'
   s.authors = ['Yegor Bugayenko']
   s.email = 'yegor256@gmail.com'
-  s.homepage = 'http://github.com/yegor256/elapsed'
+  s.homepage = 'https://github.com/yegor256/elapsed'
   s.files = `git ls-files`.split($RS)
   s.executables = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
   s.rdoc_options = ['--charset=UTF-8']
