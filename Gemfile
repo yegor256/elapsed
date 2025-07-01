@@ -7,6 +7,7 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'minitest', '~>5.25', require: false
+gem 'minitest-reporters', '~>1.7', require: false
 gem 'rake', '~>13.2', require: false
 gem 'rubocop', '~>1.69', require: false
 gem 'rubocop-minitest', '~>0.38', require: false

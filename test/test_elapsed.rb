@@ -3,8 +3,8 @@
 # SPDX-FileCopyrightText: Copyright (c) 2024-2025 Yegor Bugayenko
 # SPDX-License-Identifier: MIT
 
-require 'minitest/autorun'
 require 'loog'
+require_relative 'test__helper'
 require_relative '../lib/elapsed'
 
 # Test.
@@ -19,7 +19,7 @@ class TestElapsed < Minitest::Test
         4 + 5
       end
     assert_equal(9, r)
-    assert(loog.to_s.include?('was good'))
+    assert_includes(loog.to_s, 'was good')
   end
 
   def test_with_throw
@@ -27,7 +27,7 @@ class TestElapsed < Minitest::Test
     elapsed(loog) do
       throw :'Perfectly works'
     end
-    assert(loog.to_s.include?('works'))
+    assert_includes(loog.to_s, 'works')
   end
 
   def test_to_stdout
