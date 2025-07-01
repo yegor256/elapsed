@@ -34,7 +34,7 @@ end
 You can also make the message custom:
 
 ```ruby
-elapsed(intro: 'File saved') do
+elapsed(good: 'File saved') do
   File.save(f, 'Hello, world!')
 end
 ```

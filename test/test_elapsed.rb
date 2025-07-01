@@ -15,11 +15,20 @@ class TestElapsed < Minitest::Test
   def test_simple
     loog = Loog::Buffer.new
     r =
-      elapsed(loog, intro: 'Everything was good') do
+      elapsed(loog, good: 'Everything was good') do
         4 + 5
       end
     assert_equal(9, r)
     assert_includes(loog.to_s, 'was good')
+  end
+
+  def test_with_failure
+    loog = Loog::Buffer.new
+    assert_raises(StandardError) do
+      elapsed(loog, bad: 'Failed miserably') do
+        raise 'oops'
+      end
+    end
   end
 
   def test_with_throw
