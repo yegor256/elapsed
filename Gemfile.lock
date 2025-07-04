@@ -2,8 +2,8 @@ PATH
   remote: .
   specs:
     elapsed (0.0.0)
-      loog (> 0)
-      tago (> 0)
+      loog (~> 0.6)
+      tago (~> 0.1)
 
 GEM
   remote: https://rubygems.org/
