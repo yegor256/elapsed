@@ -44,4 +44,58 @@ class TestElapsed < Minitest::Test
       4 + 5
     end
   end
+
+  def test_with_over_threshold_reports
+    loog = Loog::Buffer.new
+    elapsed(loog, over: 0.001) do
+      sleep(0.01)
+    end
+    assert_includes(loog.to_s, 'Finished')
+  end
+
+  def test_with_over_threshold_does_not_report
+    loog = Loog::Buffer.new
+    elapsed(loog, over: 1.0) do
+      4 + 5
+    end
+    assert_equal('', loog.to_s)
+  end
+
+  def test_with_over_threshold_on_error_reports
+    loog = Loog::Buffer.new
+    assert_raises(StandardError) do
+      elapsed(loog, over: 0.001, bad: 'Error occurred') do
+        sleep(0.01)
+        raise 'error'
+      end
+    end
+    assert_includes(loog.to_s, 'Error occurred')
+  end
+
+  def test_with_over_threshold_on_error_does_not_report
+    loog = Loog::Buffer.new
+    assert_raises(StandardError) do
+      elapsed(loog, over: 1.0, bad: 'Error occurred') do
+        raise 'error'
+      end
+    end
+    assert_equal('', loog.to_s)
+  end
+
+  def test_with_over_threshold_on_throw_reports
+    loog = Loog::Buffer.new
+    elapsed(loog, over: 0.001) do
+      sleep(0.01)
+      throw :done
+    end
+    assert_includes(loog.to_s, 'done')
+  end
+
+  def test_with_over_threshold_on_throw_does_not_report
+    loog = Loog::Buffer.new
+    elapsed(loog, over: 1.0) do
+      throw :done
+    end
+    assert_equal('', loog.to_s)
+  end
 end

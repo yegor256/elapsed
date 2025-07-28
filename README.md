@@ -48,6 +48,15 @@ elapsed do
 end
 ```
 
+You can also filter out small durations using the `over:` parameter:
+
+```ruby
+elapsed(Loog::VERBOSE, over: 0.5) do
+  # This message will only be logged if the block takes more than 0.5 seconds
+  run_something_that_might_be_fast
+end
+```
+
 That's it.
 
 ## How to contribute

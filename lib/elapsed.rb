@@ -23,9 +23,13 @@ require 'tago'
 # @param [String] good The message to print on success finish
 # @param [String] bad The message to print on failure finish
 # @param [Integer] level The level of logging to use
-def elapsed(log = nil, good: 'Finished', level: Logger::DEBUG, bad: 'Failed')
+# @param [Float] over The minimum duration in seconds to report
+def elapsed(log = nil, good: 'Finished', level: Logger::DEBUG, bad: 'Failed', over: 0)
   start = Time.now
   print_it = lambda do |m|
+    duration = Time.now - start
+    return if duration < over
+
     m += " in #{start.ago}"
     if log.nil?
       puts m
