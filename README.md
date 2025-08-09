@@ -57,6 +57,15 @@ elapsed(Loog::VERBOSE, over: 0.5) do
 end
 ```
 
+You can configure the level of logging
+(use `Logger::INFO`, `Logger::DEBUG`, or `Logger::ERROR`):
+
+```ruby
+elapsed(Loog::VERBOSE, level: Logger::DEBUG) do
+  # The procedure
+end
+```
+
 That's it.
 
 ## How to contribute
