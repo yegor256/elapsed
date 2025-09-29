@@ -57,8 +57,9 @@ elapsed(Loog::VERBOSE, over: 0.5) do
 end
 ```
 
-You can configure the level of logging
-(use `Logger::INFO`, `Logger::DEBUG`, or `Logger::ERROR`):
+You can change the level of logging
+(use `Logger::INFO`, `Logger::DEBUG`, or `Logger::ERROR`), while
+the default one is `DEBUG`:
 
 ```ruby
 elapsed(Loog::VERBOSE, level: Logger::DEBUG) do
