@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new('>= 0') if s.respond_to? :required_rubygems_version=
   s.required_ruby_version = '>=3.2'
   s.name = 'elapsed'
-  s.version = '0.0.0'
+  s.version = '0.2.1'
   s.license = 'MIT'
   s.summary = 'A simple Ruby function to measure the time elapsed by the execution of a block'
   s.description =
