@@ -33,12 +33,16 @@ def elapsed(log = nil, good: 'Finished', level: Logger::DEBUG, bad: 'Failed', ov
     m += " in #{start.ago}"
     if log.nil?
       puts m
-    elsif level == Logger::DEBUG
+    elsif level == Logger::DEBUG && log.respond_to?(:debug)
       log.debug(m)
-    elsif level == Logger::INFO
+    elsif level == Logger::INFO && log.respond_to?(:info)
       log.info(m)
-    else
+    elsif log.respond_to?(:warn)
       log.warn(m)
+    elsif log.respond_to?(:puts)
+      log.puts(m)
+    else
+      raise "The log doesn't accept any logging requests"
     end
   end
   begin

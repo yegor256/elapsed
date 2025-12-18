@@ -31,6 +31,26 @@ class TestElapsed < Minitest::Test
     end
   end
 
+  def test_with_stdout
+    elapsed($stdout) do
+      3 + 3
+    end
+  end
+
+  def test_with_stdout_and_warn
+    elapsed($stdout, level: Logger::WARN) do
+      3 + 3
+    end
+  end
+
+  def test_with_all_levels
+    [Logger::WARN, Logger::INFO, Logger::DEBUG].each do |level|
+      elapsed(Loog::NULL, level:) do
+        3 + 3
+      end
+    end
+  end
+
   def test_with_throw
     loog = Loog::Buffer.new
     elapsed(loog) do
