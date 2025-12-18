@@ -37,6 +37,14 @@ class TestElapsed < Minitest::Test
     end
   end
 
+  def test_with_bad_log
+    assert_raises(StandardError) do
+      elapsed(42) do
+        3 + 3
+      end
+    end
+  end
+
   def test_with_stdout_and_warn
     elapsed($stdout, level: Logger::WARN) do
       3 + 3
