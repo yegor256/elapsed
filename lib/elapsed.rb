@@ -45,16 +45,22 @@ def elapsed(log = nil, good: 'Finished', level: Logger::DEBUG, bad: 'Failed', ov
       raise "The log doesn't accept any logging requests"
     end
   end
+  done = false
   begin
     ret = yield
+    done = true
     print_it.call(good.to_s)
     ret
   rescue UncaughtThrowError => e
+    done = true
     tag = e.tag
     throw e unless tag.is_a?(Symbol)
     print_it.call(tag.to_s)
   rescue StandardError => e
+    done = true
     print_it.call(bad.to_s)
     raise e
+  ensure
+    print_it.call(good.to_s) unless done
   end
 end

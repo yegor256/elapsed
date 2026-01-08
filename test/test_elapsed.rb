@@ -126,4 +126,39 @@ class TestElapsed < Minitest::Test
     end
     assert_equal('', loog.to_s)
   end
+
+  def test_with_early_return
+    loog = Loog::Buffer.new
+    ret = with_early_return(loog, true)
+    assert_equal(42, ret)
+    assert_includes(loog.to_s, 'Early exit')
+  end
+
+  def test_with_early_return_over_threshold
+    loog = Loog::Buffer.new
+    with_early_return_slow(loog, 0.001)
+    assert_includes(loog.to_s, 'Early exit')
+  end
+
+  def test_with_early_return_under_threshold
+    loog = Loog::Buffer.new
+    with_early_return_slow(loog, 1.0)
+    assert_equal('', loog.to_s)
+  end
+
+  private
+
+  def with_early_return(loog, flag)
+    elapsed(loog, good: 'Early exit') do
+      return 42 if flag
+      100
+    end
+  end
+
+  def with_early_return_slow(loog, over)
+    elapsed(loog, good: 'Early exit', over:) do
+      sleep(0.01)
+      return 42
+    end
+  end
 end
