@@ -151,6 +151,7 @@ class TestElapsed < Minitest::Test
   def with_early_return(loog, flag)
     elapsed(loog, good: 'Early exit') do
       return 42 if flag
+
       100
     end
   end
