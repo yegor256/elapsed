@@ -58,7 +58,7 @@ def elapsed(log = nil, good: 'Finished', level: Logger::DEBUG, bad: nil, over: 0
     print_it.call(tag.to_s)
   rescue StandardError => e
     done = true
-    print_it.call((bad || e.message).to_s)
+    print_it.call((bad || "#{e.message} (#{e.class.name})").to_s)
     raise e
   ensure
     print_it.call(good.to_s) unless done
