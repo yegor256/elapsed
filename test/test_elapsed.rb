@@ -31,6 +31,16 @@ class TestElapsed < Minitest::Test
     end
   end
 
+  def test_with_failure_uses_error_message_by_default
+    loog = Loog::Buffer.new
+    assert_raises(StandardError) do
+      elapsed(loog) do
+        raise 'something went wrong'
+      end
+    end
+    assert_includes(loog.to_s, 'something went wrong', 'error message not included in log output')
+  end
+
   def test_with_stdout
     elapsed($stdout) do
       3 + 3

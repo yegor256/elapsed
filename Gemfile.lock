@@ -13,12 +13,14 @@ GEM
     builder (3.3.0)
     date (3.5.1)
     docile (1.4.1)
+    ellipsized (0.3.0)
     erb (6.0.1)
     json (2.18.0)
     language_server-protocol (3.17.0.5)
     lint_roller (1.1.0)
     logger (1.7.0)
-    loog (0.6.1)
+    loog (0.7.2)
+      ellipsized
       logger (~> 1.0)
     minitest (6.0.1)
       prism (~> 1.5)
@@ -31,7 +33,7 @@ GEM
     parser (3.3.10.1)
       ast (~> 2.4.1)
       racc
-    prism (1.8.0)
+    prism (1.9.0)
     psych (5.3.1)
       date
       stringio
@@ -80,7 +82,7 @@ GEM
     simplecov-html (0.13.2)
     simplecov_json_formatter (0.1.4)
     stringio (3.2.0)
-    tago (0.6.0)
+    tago (0.7.0)
     tsort (0.2.0)
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
