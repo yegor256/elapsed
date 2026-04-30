@@ -31,7 +31,7 @@ GEM
       builder
       minitest (>= 5.0, < 7)
       ruby-progressbar
-    parallel (1.27.0)
+    parallel (1.28.0)
     parser (3.3.11.1)
       ast (~> 2.4.1)
       racc
@@ -46,7 +46,7 @@ GEM
       erb
       psych (>= 4.0.0)
       tsort
-    regexp_parser (2.11.3)
+    regexp_parser (2.12.0)
     rexml (3.4.4)
     rubocop (1.86.1)
       json (~> 2.3)
@@ -62,7 +62,7 @@ GEM
     rubocop-ast (1.49.1)
       parser (>= 3.3.7.2)
       prism (~> 1.7)
-    rubocop-minitest (0.38.2)
+    rubocop-minitest (0.39.1)
       lint_roller (~> 1.1)
       rubocop (>= 1.75.0, < 2.0)
       rubocop-ast (>= 1.38.0, < 2.0)
