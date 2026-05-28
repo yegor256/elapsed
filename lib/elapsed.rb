@@ -26,41 +26,40 @@ require 'tago'
 # @param [Float] over The minimum duration in seconds to report
 def elapsed(log = nil, good: 'Finished', level: Logger::DEBUG, bad: nil, over: 0)
   start = Time.now
-  print_it = lambda do |m|
-    duration = Time.now - start
-    return if duration < over
-
-    m += " in #{start.ago}"
-    if log.nil?
-      puts m
-    elsif level == Logger::DEBUG && log.respond_to?(:debug)
-      log.debug(m)
-    elsif level == Logger::INFO && log.respond_to?(:info)
-      log.info(m)
-    elsif log.respond_to?(:warn)
-      log.warn(m)
-    elsif log.respond_to?(:puts)
-      log.puts(m)
-    else
-      raise "The log doesn't accept any logging requests"
+  printer =
+    lambda do |m|
+      return if (Time.now - start) < over
+      m += " in #{start.ago}"
+      if log.nil?
+        puts(m)
+      elsif level == Logger::DEBUG && log.respond_to?(:debug)
+        log.debug(m)
+      elsif level == Logger::INFO && log.respond_to?(:info)
+        log.info(m)
+      elsif log.respond_to?(:warn)
+        log.warn(m)
+      elsif log.respond_to?(:puts)
+        log.puts(m)
+      else
+        raise(StandardError, "The log doesn't accept any logging requests")
+      end
     end
-  end
   done = false
   begin
-    ret = yield
-    done = true
-    print_it.call(good.to_s)
-    ret
+    yield.tap do
+      done = true
+      printer.call(good.to_s)
+    end
   rescue UncaughtThrowError => e
     done = true
     tag = e.tag
-    throw e unless tag.is_a?(Symbol)
-    print_it.call(tag.to_s)
+    throw(e) unless tag.is_a?(Symbol)
+    printer.call(tag.to_s)
   rescue StandardError => e
     done = true
-    print_it.call((bad || "#{e.message} (#{e.class.name})").to_s)
-    raise e
+    printer.call((bad || "#{e.message} (#{e.class.name})").to_s)
+    raise(e)
   ensure
-    print_it.call(good.to_s) unless done
+    printer.call(good.to_s) unless done
   end
 end

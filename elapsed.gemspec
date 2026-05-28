@@ -6,7 +6,7 @@
 require 'English'
 
 Gem::Specification.new do |s|
-  s.required_rubygems_version = Gem::Requirement.new('>= 0') if s.respond_to? :required_rubygems_version=
+  s.required_rubygems_version = Gem::Requirement.new('>= 0') if s.respond_to?(:required_rubygems_version=)
   s.required_ruby_version = '>=3.2'
   s.name = 'elapsed'
   s.version = '0.0.0'
@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.executables = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
   s.rdoc_options = ['--charset=UTF-8']
   s.extra_rdoc_files = ['README.md', 'LICENSE.txt']
-  s.add_dependency 'loog', '~>0.6'
-  s.add_dependency 'tago', '~>0.1'
+  s.add_dependency('loog', '~>0.6')
+  s.add_dependency('tago', '~>0.1')
   s.metadata['rubygems_mfa_required'] = 'true'
 end

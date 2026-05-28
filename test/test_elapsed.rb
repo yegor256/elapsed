@@ -4,8 +4,8 @@
 # SPDX-License-Identifier: MIT
 
 require 'loog'
-require_relative 'test__helper'
 require_relative '../lib/elapsed'
+require_relative 'test__helper'
 
 # Test.
 # Author:: Yegor Bugayenko (yegor256@gmail.com)
@@ -14,11 +14,12 @@ require_relative '../lib/elapsed'
 class TestElapsed < Minitest::Test
   def test_simple
     loog = Loog::Buffer.new
-    r =
+    assert_equal(
+      9,
       elapsed(loog, good: 'Everything was good') do
         4 + 5
       end
-    assert_equal(9, r)
+    )
     assert_includes(loog.to_s, 'was good')
   end
 
@@ -26,7 +27,7 @@ class TestElapsed < Minitest::Test
     loog = Loog::Buffer.new
     assert_raises(StandardError) do
       elapsed(loog, bad: 'Failed miserably') do
-        raise 'oops'
+        raise(StandardError, 'oops')
       end
     end
   end
@@ -35,7 +36,7 @@ class TestElapsed < Minitest::Test
     loog = Loog::Buffer.new
     assert_raises(StandardError) do
       elapsed(loog) do
-        raise 'something went wrong'
+        raise(StandardError, 'something went wrong')
       end
     end
     assert_includes(loog.to_s, 'something went wrong', 'error message not included in log output')
@@ -72,7 +73,7 @@ class TestElapsed < Minitest::Test
   def test_with_throw
     loog = Loog::Buffer.new
     elapsed(loog) do
-      throw :'Perfectly works'
+      throw(:'Perfectly works')
     end
     assert_includes(loog.to_s, 'works')
   end
@@ -104,17 +105,17 @@ class TestElapsed < Minitest::Test
     assert_raises(StandardError) do
       elapsed(loog, over: 0.001, bad: 'Error occurred') do
         sleep(0.01)
-        raise 'error'
+        raise(StandardError, 'error')
       end
     end
     assert_includes(loog.to_s, 'Error occurred')
   end
 
-  def test_with_over_threshold_on_error_does_not_report
+  def test_with_over_error_does_not_report
     loog = Loog::Buffer.new
     assert_raises(StandardError) do
       elapsed(loog, over: 1.0, bad: 'Error occurred') do
-        raise 'error'
+        raise(StandardError, 'error')
       end
     end
     assert_equal('', loog.to_s)
@@ -124,49 +125,47 @@ class TestElapsed < Minitest::Test
     loog = Loog::Buffer.new
     elapsed(loog, over: 0.001) do
       sleep(0.01)
-      throw :done
+      throw(:done)
     end
     assert_includes(loog.to_s, 'done')
   end
 
-  def test_with_over_threshold_on_throw_does_not_report
+  def test_with_over_throw_does_not_report
     loog = Loog::Buffer.new
     elapsed(loog, over: 1.0) do
-      throw :done
+      throw(:done)
     end
     assert_equal('', loog.to_s)
   end
 
   def test_with_early_return
     loog = Loog::Buffer.new
-    ret = with_early_return(loog, true)
-    assert_equal(42, ret)
+    assert_equal(42, with_returner(loog, true))
     assert_includes(loog.to_s, 'Early exit')
   end
 
   def test_with_early_return_over_threshold
     loog = Loog::Buffer.new
-    with_early_return_slow(loog, 0.001)
+    with_slow(loog, 0.001)
     assert_includes(loog.to_s, 'Early exit')
   end
 
   def test_with_early_return_under_threshold
     loog = Loog::Buffer.new
-    with_early_return_slow(loog, 1.0)
+    with_slow(loog, 1.0)
     assert_equal('', loog.to_s)
   end
 
   private
 
-  def with_early_return(loog, flag)
+  def with_returner(loog, flag)
     elapsed(loog, good: 'Early exit') do
       return 42 if flag
-
       100
     end
   end
 
-  def with_early_return_slow(loog, over)
+  def with_slow(loog, over)
     elapsed(loog, good: 'Early exit', over:) do
       sleep(0.01)
       return 42
