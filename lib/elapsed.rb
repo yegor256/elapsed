@@ -55,7 +55,7 @@ def elapsed(log = nil, good: 'Finished', level: Logger::DEBUG, bad: nil, over: 0
     tag = e.tag
     throw(e) unless tag.is_a?(Symbol)
     printer.call(tag.to_s)
-  rescue StandardError => e
+  rescue Exception => e # rubocop:disable Lint/RescueException
     done = true
     printer.call((bad || "#{e.message} (#{e.class.name})").to_s)
     raise(e)
