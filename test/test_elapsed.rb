@@ -42,6 +42,17 @@ class TestElapsed < Minitest::Test
     assert_includes(loog.to_s, 'something went wrong', 'error message not included in log output')
   end
 
+  def test_with_non_standard_error
+    loog = Loog::Buffer.new
+    assert_raises(NotImplementedError) do
+      elapsed(loog, good: 'All good') do
+        raise(NotImplementedError, 'not yet')
+      end
+    end
+    refute_includes(loog.to_s, 'All good', 'failure was logged as success')
+    assert_includes(loog.to_s, 'not yet', 'error message not included in log output')
+  end
+
   def test_with_stdout
     elapsed($stdout) do
       3 + 3
