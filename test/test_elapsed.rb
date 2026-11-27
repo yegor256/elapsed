@@ -89,6 +89,18 @@ class TestElapsed < Minitest::Test
     assert_includes(loog.to_s, 'works')
   end
 
+  def test_with_non_symbol_throw_reraises_original
+    tag = Object.new
+    error =
+      assert_raises(UncaughtThrowError) do
+        elapsed(Loog::NULL) do
+          throw(tag, 42)
+        end
+      end
+    assert_same(tag, error.tag, 'original throw tag was replaced')
+    assert_equal(42, error.value, 'original thrown value was lost')
+  end
+
   def test_to_stdout
     elapsed do
       4 + 5

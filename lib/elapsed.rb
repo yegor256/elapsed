@@ -53,7 +53,7 @@ def elapsed(log = nil, good: 'Finished', level: Logger::DEBUG, bad: nil, over: 0
   rescue UncaughtThrowError => e
     done = true
     tag = e.tag
-    throw(e) unless tag.is_a?(Symbol)
+    raise(e) unless tag.is_a?(Symbol)
     printer.call(tag.to_s)
   rescue Exception => e # rubocop:disable Lint/RescueException
     done = true
